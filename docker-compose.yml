@@ -1,0 +1,25 @@
+services:
+  api:
+    build: ./backend
+    ports:
+      - "8000:8000"
+    environment:
+      MAX_UPLOAD_MB: 20
+    volumes:
+      - ./backend:/app
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: ssr
+      POSTGRES_PASSWORD: ssr
+      POSTGRES_DB: ssr
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+volumes:
+  pgdata:
